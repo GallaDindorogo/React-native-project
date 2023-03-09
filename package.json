@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "react-devtools": "react-devtools"
+    
   },
   "dependencies": {
     "expo": "~48.0.5",
@@ -15,10 +17,13 @@
     "expo-splash-screen": "^0.18.1",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
-    "react-native": "0.71.3"
+    "react-native": "0.71.3",
+    "redux-devtools-extension": "^2.13.9",
+    "@react-native-community/cli-debugger-ui": "4.7.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "react-devtools": "^4.27.2"
   },
   "private": true
 }
