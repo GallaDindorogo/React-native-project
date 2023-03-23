@@ -14,23 +14,30 @@ import {
   Button,
 } from "react-native";
 
+import { useDispatch } from "react-redux";
+import { authSignInUser } from "../../Redux/auth/authOperation";
+
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 
 const initialState = {
-  emailAddress: "",
+  email: "",
   password: "",
 };
 
 const LoginScreen = ({ navigation }) => {
   const [state, setstate] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const keyboardHide = () => {
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(state);
+    dispatch(authSignInUser(state));
+    console.log("submit ", state);
     setstate(initialState);
   };
 
@@ -50,7 +57,7 @@ const LoginScreen = ({ navigation }) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
+    <TouchableWithoutFeedback onPress={handleSubmit}>
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
@@ -82,11 +89,11 @@ const LoginScreen = ({ navigation }) => {
                     onFocus={() => {
                       setIsShowKeyboard(true);
                     }}
-                    value={state.emailAdress}
+                    value={state.email}
                     onChangeText={(value) =>
                       setstate((prevState) => ({
                         ...prevState,
-                        emailAdress: value,
+                        email: value,
                       }))
                     }
                   ></TextInput>
@@ -113,12 +120,7 @@ const LoginScreen = ({ navigation }) => {
                   <Text style={styles.showPass}>{"Показати"}</Text>
                 </View>
               </View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                  navigation.navigate("Home", { screen: "PostsScreen" })
-                }
-              >
+              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.textButton}>Увійти</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate("Register")}>

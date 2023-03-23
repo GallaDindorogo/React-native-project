@@ -17,21 +17,28 @@ import {
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
+import { useDispatch } from "react-redux";
+import { authSignUpUser } from "../../Redux/auth/authOperation";
+
 SplashScreen.preventAutoHideAsync();
 
 const initialState = {
   username: "",
-  emailAdress: "",
+  email: "",
   password: "",
 };
 
 const RegistrationScreen = ({ navigation }) => {
-  const [state, setstate] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const keyboardHide = () => {
+  const [state, setstate] = useState(initialState);
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(state);
+    dispatch(authSignUpUser(state));
+    console.log("state:", state);
     setstate(initialState);
   };
 
@@ -51,7 +58,7 @@ const RegistrationScreen = ({ navigation }) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
+    <TouchableWithoutFeedback onPress={handleSubmit}>
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
@@ -102,11 +109,11 @@ const RegistrationScreen = ({ navigation }) => {
                     onFocus={() => {
                       setIsShowKeyboard(true);
                     }}
-                    value={state.emailAdress}
+                    value={state.email}
                     onChangeText={(value) =>
                       setstate((prevState) => ({
                         ...prevState,
-                        emailAdress: value,
+                        email: value,
                       }))
                     }
                   ></TextInput>
@@ -135,7 +142,9 @@ const RegistrationScreen = ({ navigation }) => {
               </View>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate("Home")}
+                // onPress={() => navigation.navigate("Home")}
+                activeOpacity={0.8}
+                onPress={handleSubmit}
               >
                 <Text style={styles.textButton}>Зареєструватися</Text>
               </TouchableOpacity>
