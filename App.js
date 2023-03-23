@@ -19,7 +19,7 @@ export default function App() {
     try {
       onAuthStateChanged(auth, (user) => {
         setUser(user);
-        console.log(user, "- єто APP :");
+        console.log(user, "- it's user-APP :");
       });
     } catch (error) {
       console.log("error", error);
