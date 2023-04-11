@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useCallback } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Provider } from "react-redux";
 
@@ -45,13 +46,15 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
-      <View
-        style={{ flex: 1, backgroundColor: "#fff" }}
-        onLayout={onLayoutRootView}
-      >
-        <Main />
-      </View>
-    </Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <View
+          style={{ flex: 1, backgroundColor: "#fff" }}
+          onLayout={onLayoutRootView}
+        >
+          <Main />
+        </View>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }
