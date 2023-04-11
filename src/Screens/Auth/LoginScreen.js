@@ -20,7 +20,7 @@ import { authSignInUser } from "../../Redux/auth/authOperation";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const initialState = {
   email: "",
@@ -37,24 +37,23 @@ const LoginScreen = ({ navigation }) => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
     dispatch(authSignInUser(state));
-    console.log("submit ", state);
     setstate(initialState);
   };
 
-  const [fontsLoaded] = useFonts({
-    RobotoRegular: require("../../../assets/fonts/Roboto-Regular.ttf"),
-    RobotoMedium: require("../../../assets/fonts/Roboto-Medium.ttf"),
-  });
+  // const [fontsLoaded] = useFonts({
+  //   RobotoRegular: require("../../../assets/fonts/Roboto-Regular.ttf"),
+  //   RobotoMedium: require("../../../assets/fonts/Roboto-Medium.ttf"),
+  // });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (fontsLoaded) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
 
   return (
     <TouchableWithoutFeedback onPress={handleSubmit}>
@@ -67,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
             <View
-              onLayout={onLayoutRootView}
+              // onLayout={onLayoutRootView}
               style={{
                 ...styles.formWrapper,
                 marginTop: isShowKeyboard ? 147 : 263,

@@ -4,6 +4,7 @@ const state = {
   userID: null,
   username: null,
   email: null,
+  photoURL: null,
   stateChange: false,
 };
 
@@ -17,6 +18,7 @@ export const authSlice = createSlice({
       username: payload.username,
       email: payload.email,
     }),
+
     authStateChange: (state, { payload }) => ({
       ...state,
       stateChange: payload.stateChange,
@@ -24,3 +26,4 @@ export const authSlice = createSlice({
   },
   authSignOut: () => state,
 });
+console.log("updateUserProfile", state);

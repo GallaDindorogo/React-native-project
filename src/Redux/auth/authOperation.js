@@ -13,30 +13,32 @@ import { authSlice } from "./authReducer";
 
 const auth = getAuth(db);
 
-console.log("getAuth(db)", auth);
-
 const { updateUserProfile, authSignOut, authStateChange } = authSlice.actions;
 
 export const authSignUpUser =
-  ({ email, password, username }) =>
+  ({ email, password, username, photo }) =>
   async (dispatch, getState) => {
-    console.log("SignUp", email, password, username);
-
+    console.log("SignUp", email, password, username, photo);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
 
-      const user = await auth.currentUser;
-
-      await updateProfile(user, {
+      await updateProfile(auth.currentUser, {
         displayName: username,
       });
 
-      const { uid, displayName } = await auth.currentUser;
+      const {
+        uid,
+        displayName,
+        email: userEmail,
+        photoURL,
+      } = await auth.currentUser;
 
       dispatch(
         updateUserProfile({
           userID: uid,
           username: displayName,
+          email: userEmail,
+          photoURL,
         })
       );
     } catch (error) {
@@ -61,27 +63,33 @@ export const authSignInUser =
   };
 
 export const authSignOutUser = () => async (dispatch, getState) => {
-  await signOut(auth);
-  dispatch(authSignOut());
+  try {
+    await auth.signOut();
+
+    dispatch(authSignOut());
+  } catch (error) {
+    console.log("error.message", error.message);
+  }
 };
 
 export const authStateChangeUser = () => async (dispatch, getState) => {
-  await onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const userUpdateProfile = {
-        username: user.displayName,
-        userID: user.uid,
-        email: user.email,
-      };
-      const userStateChange = {
-        stateChange: true,
-      };
+  try {
+    await onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userUpdateProfile = {
+          username: user.displayName,
+          userID: user.uid,
+          email: user.email,
+          photoURL: user.photoURL,
+        };
+        dispatch(updateUserProfile(userUpdateProfile));
+        dispatch(authStateChange({ stateChange: true }));
 
-      dispatch(authStateChange(userStateChange));
-      dispatch(updateUserProfile(userUpdateProfile));
-      console.log(auth, "authStateChangeUser");
-      console.log("userStateChange", userStateChange);
-      console.log("userUpdateProfile:", userUpdateProfile);
-    }
-  });
+        console.log("userUpdateProfile", userUpdateProfile);
+        console.log("stateChange");
+      }
+    });
+  } catch (error) {
+    Alert.alert(error.message);
+  }
 };

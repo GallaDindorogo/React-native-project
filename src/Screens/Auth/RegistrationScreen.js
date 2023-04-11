@@ -20,7 +20,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useDispatch } from "react-redux";
 import { authSignUpUser } from "../../Redux/auth/authOperation";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const initialState = {
   username: "",
@@ -42,20 +42,20 @@ const RegistrationScreen = ({ navigation }) => {
     setstate(initialState);
   };
 
-  const [fontsLoaded] = useFonts({
-    RobotoRegular: require("../../../assets/fonts/Roboto-Regular.ttf"),
-    RobotoMedium: require("../../../assets/fonts/Roboto-Medium.ttf"),
-  });
+  // const [fontsLoaded] = useFonts({
+  //   RobotoRegular: require("../../../assets/fonts/Roboto-Regular.ttf"),
+  //   RobotoMedium: require("../../../assets/fonts/Roboto-Medium.ttf"),
+  // });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (fontsLoaded) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
 
   return (
     <TouchableWithoutFeedback onPress={handleSubmit}>
@@ -68,7 +68,7 @@ const RegistrationScreen = ({ navigation }) => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
             <View
-              onLayout={onLayoutRootView}
+              // onLayout={onLayoutRootView}
               style={{
                 ...styles.formWrapper,
                 marginTop: isShowKeyboard ? 147 : 263,
