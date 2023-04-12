@@ -27,6 +27,7 @@
     "expo-permissions": "~14.0.0",
     "expo-splash-screen": "^0.17.5",
     "expo-status-bar": "~1.4.4",
+    "fb-watchman": "^2.0.2",
     "firebase": "^9.18.0",
     "react": "18.1.0",
     "react-native": "0.70.8",
